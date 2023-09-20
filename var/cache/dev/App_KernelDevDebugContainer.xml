@@ -336,6 +336,13 @@
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
+    <service id="App\Controller\EtablissementController" class="App\Controller\EtablissementController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\EtablissementController"/>
+      </call>
+    </service>
     <service id="App\Controller\EtudiantController" class="App\Controller\EtudiantController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -352,6 +359,9 @@
     </service>
     <service id="App\DataFixtures\EtudiantFixture" class="App\DataFixtures\EtudiantFixture" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\Form\EtablissementType" class="App\Form\EtablissementType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
     </service>
     <service id="App\Form\EtudiantType" class="App\Form\EtudiantType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
@@ -391,7 +401,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.X.nY1jh"/>
+      <argument type="service" id=".service_locator.DIAlil9"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1256,6 +1266,7 @@
         <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
       </argument>
       <argument type="collection">
+        <argument>App\Form\EtablissementType</argument>
         <argument>App\Form\EtudiantType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
@@ -2947,7 +2958,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.X.nY1jh"/>
+      <argument type="service" id=".service_locator.DIAlil9"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <argument type="service" id="request_stack"/>
@@ -3425,7 +3436,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.xpGgplF"/>
+      <argument type="service" id=".service_locator.SBIUh8m"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -6494,6 +6505,9 @@
     <service id="doctrine.fixtures.purger.orm_purger_factory" class="Doctrine\Bundle\FixturesBundle\Purger\ORMPurgerFactory">
       <tag name="doctrine.fixtures.purger_factory" alias="default"/>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\EtablissementController" class="App\Controller\EtablissementController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\EtablissementController" class="App\Controller\EtablissementController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\EtablissementController" class="App\Controller\EtablissementController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\EtudiantController" class="App\Controller\EtudiantController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\EtudiantController" class="App\Controller\EtudiantController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\EtudiantController" class="App\Controller\EtudiantController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6502,6 +6516,8 @@
     <service id=".abstract.instanceof.App\Controller\HelloWordController" class="App\Controller\HelloWordController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\EtudiantFixture" class="App\DataFixtures\EtudiantFixture" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataFixtures\EtudiantFixture" class="App\DataFixtures\EtudiantFixture" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\EtablissementType" class="App\Form\EtablissementType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\EtablissementType" class="App\Form\EtablissementType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\EtudiantType" class="App\Form\EtudiantType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\EtudiantType" class="App\Form\EtudiantType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\EtablissementRepository" class="App\Repository\EtablissementRepository" autowire="true" abstract="true"/>
@@ -6882,16 +6898,35 @@
         <argument key="loader" type="service_closure" id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.QKI.Drm" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator..dGzn4B" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="etudiantRepository" type="service_closure" id="App\Repository\EtudiantRepository"/>
+        <argument key="etablissementRepository" type="service_closure" id="App\Repository\EtablissementRepository"/>
       </argument>
     </service>
     <service id=".service_locator.CsMkqUa" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.SvV89WQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="etablissement" type="service_closure" id=".errored..service_locator.SvV89WQ.App\Entity\Etablissement"/>
+      </argument>
+    </service>
+    <service id=".service_locator.l_sJTKb" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="etablissement" type="service_closure" id=".errored..service_locator.l_sJTKb.App\Entity\Etablissement"/>
+      </argument>
+    </service>
+    <service id=".service_locator.QKI.Drm" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="etudiantRepository" type="service_closure" id="App\Repository\EtudiantRepository"/>
       </argument>
     </service>
     <service id=".service_locator.go01M3X" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -6907,9 +6942,14 @@
         <argument key="etudiant" type="service_closure" id=".errored..service_locator.haLTs5y.App\Entity\Etudiant"/>
       </argument>
     </service>
-    <service id=".service_locator.X.nY1jh" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.DIAlil9" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\EtablissementController::delete" type="service_closure" id=".service_locator.l_sJTKb"/>
+        <argument key="App\Controller\EtablissementController::edit" type="service_closure" id=".service_locator.l_sJTKb"/>
+        <argument key="App\Controller\EtablissementController::index" type="service_closure" id=".service_locator..dGzn4B"/>
+        <argument key="App\Controller\EtablissementController::new" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\EtablissementController::show" type="service_closure" id=".service_locator.SvV89WQ"/>
         <argument key="App\Controller\EtudiantController::delete" type="service_closure" id=".service_locator.haLTs5y"/>
         <argument key="App\Controller\EtudiantController::edit" type="service_closure" id=".service_locator.haLTs5y"/>
         <argument key="App\Controller\EtudiantController::index" type="service_closure" id=".service_locator.QKI.Drm"/>
@@ -6920,6 +6960,11 @@
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
+        <argument key="App\Controller\EtablissementController:delete" type="service_closure" id=".service_locator.l_sJTKb"/>
+        <argument key="App\Controller\EtablissementController:edit" type="service_closure" id=".service_locator.l_sJTKb"/>
+        <argument key="App\Controller\EtablissementController:index" type="service_closure" id=".service_locator..dGzn4B"/>
+        <argument key="App\Controller\EtablissementController:new" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\EtablissementController:show" type="service_closure" id=".service_locator.SvV89WQ"/>
         <argument key="App\Controller\EtudiantController:delete" type="service_closure" id=".service_locator.haLTs5y"/>
         <argument key="App\Controller\EtudiantController:edit" type="service_closure" id=".service_locator.haLTs5y"/>
         <argument key="App\Controller\EtudiantController:index" type="service_closure" id=".service_locator.QKI.Drm"/>
@@ -7083,9 +7128,10 @@
       <argument type="service" id="argument_resolver.query_parameter_value_resolver"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.xpGgplF" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.SBIUh8m" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Form\EtablissementType" type="service_closure" id="App\Form\EtablissementType"/>
         <argument key="App\Form\EtudiantType" type="service_closure" id="App\Form\EtudiantType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service_closure" id="form.type.entity"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service_closure" id="form.type.choice"/>
@@ -7541,6 +7587,12 @@
         <argument key="web_link.http_header_serializer" type="service_closure" id="web_link.http_header_serializer" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.O2p6Lk7.App\Controller\EtablissementController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\EtablissementController"/>
+      <argument>App\Controller\EtablissementController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
+    </service>
     <service id=".service_locator.O2p6Lk7.App\Controller\EtudiantController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\EtudiantController"/>
       <argument>App\Controller\EtudiantController</argument>
@@ -7893,6 +7945,12 @@
     <service id="debug.security.event_dispatcher.main.inner" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
+    </service>
+    <service id=".errored..service_locator.SvV89WQ.App\Entity\Etablissement" class="App\Entity\Etablissement">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.SvV89WQ&quot;: it needs an instance of &quot;App\Entity\Etablissement&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
+    </service>
+    <service id=".errored..service_locator.l_sJTKb.App\Entity\Etablissement" class="App\Entity\Etablissement">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.l_sJTKb&quot;: it needs an instance of &quot;App\Entity\Etablissement&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
     </service>
     <service id=".errored..service_locator.go01M3X.App\Entity\Etudiant" class="App\Entity\Etudiant">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.go01M3X&quot;: it needs an instance of &quot;App\Entity\Etudiant&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
@@ -8872,7 +8930,7 @@
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.7nzbL4K" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.X.nY1jh"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.DIAlil9"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
@@ -8893,10 +8951,11 @@
     <service id=".service_locator.80edgLI" alias="messenger.receiver_locator"/>
     <service id=".service_locator.h8Jkkd2" alias="messenger.retry_strategy_locator"/>
     <service id=".service_locator.o.uf2zi" alias=".service_locator.7nzbL4K"/>
+    <service id=".service_locator.qDQstOG" alias=".service_locator.l_sJTKb"/>
     <service id=".service_locator._qXcRIk" alias=".service_locator.haLTs5y"/>
-    <service id=".service_locator.tUskCqG" alias=".service_locator.X.nY1jh"/>
+    <service id=".service_locator.RTvRD4t" alias=".service_locator.DIAlil9"/>
     <service id=".service_locator.BFrsqsn" alias=".service_locator.F9PKc.7"/>
-    <service id=".service_locator.AO8SS8z" alias=".service_locator.xpGgplF"/>
+    <service id=".service_locator.Qu8jPqA" alias=".service_locator.SBIUh8m"/>
     <service id=".service_locator.jij13qc" alias=".service_locator.PBToVFE"/>
     <service id=".service_locator.O24_MAy" alias=".service_locator.yY.p4P7"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
@@ -8917,8 +8976,11 @@
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id="security.event_dispatcher.main" alias="debug.security.event_dispatcher.main"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
-    <service id=".service_locator.ZbgxDPl" alias=".service_locator.QKI.Drm"/>
+    <service id=".service_locator.wvrI7Dg" alias=".service_locator..dGzn4B"/>
     <service id=".service_locator.9e2t_lq" alias=".service_locator.CsMkqUa"/>
+    <service id=".service_locator.EA._Ntd" alias=".service_locator.SvV89WQ"/>
+    <service id=".service_locator.QR6lS2s" alias=".service_locator.l_sJTKb"/>
+    <service id=".service_locator.ZbgxDPl" alias=".service_locator.QKI.Drm"/>
     <service id=".service_locator.PAHtSvB" alias=".service_locator.go01M3X"/>
     <service id=".service_locator.5pyyBjN" alias=".service_locator.haLTs5y"/>
     <service id=".service_locator.Q1z.f9O" alias=".service_locator.O2p6Lk7"/>

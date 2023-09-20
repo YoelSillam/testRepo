@@ -14,6 +14,8 @@ return [
         '/_profiler/phpinfo' => [[['_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'], null, null, null, false, false, null]],
         '/_profiler/xdebug' => [[['_route' => '_profiler_xdebug', '_controller' => 'web_profiler.controller.profiler::xdebugAction'], null, null, null, false, false, null]],
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
+        '/etablissement' => [[['_route' => 'app_etablissement_index', '_controller' => 'App\\Controller\\EtablissementController::index'], null, ['GET' => 0], null, true, false, null]],
+        '/etablissement/new' => [[['_route' => 'app_etablissement_new', '_controller' => 'App\\Controller\\EtablissementController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/etudiant' => [[['_route' => 'app_etudiant_index', '_controller' => 'App\\Controller\\EtudiantController::index'], null, ['GET' => 0], null, true, false, null]],
         '/etudiant/filtre' => [[['_route' => 'app_etudiant_filtre', '_controller' => 'App\\Controller\\EtudiantController::indexFiltre'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/etudiant/new' => [[['_route' => 'app_etudiant_new', '_controller' => 'App\\Controller\\EtudiantController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
@@ -37,10 +39,17 @@ return [
                         .'|(*:159)'
                     .')'
                 .')'
-                .'|/etudiant/([^/]++)(?'
-                    .'|(*:190)'
-                    .'|/edit(*:203)'
-                    .'|(*:211)'
+                .'|/et(?'
+                    .'|ablissement/([^/]++)(?'
+                        .'|(*:198)'
+                        .'|/edit(*:211)'
+                        .'|(*:219)'
+                    .')'
+                    .'|udiant/([^/]++)(?'
+                        .'|(*:246)'
+                        .'|/edit(*:259)'
+                        .'|(*:267)'
+                    .')'
                 .')'
             .')/?$}sDu',
     ],
@@ -52,9 +61,12 @@ return [
         136 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        190 => [[['_route' => 'app_etudiant_show', '_controller' => 'App\\Controller\\EtudiantController::show'], ['id'], ['GET' => 0], null, false, true, null]],
-        203 => [[['_route' => 'app_etudiant_edit', '_controller' => 'App\\Controller\\EtudiantController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        211 => [
+        198 => [[['_route' => 'app_etablissement_show', '_controller' => 'App\\Controller\\EtablissementController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        211 => [[['_route' => 'app_etablissement_edit', '_controller' => 'App\\Controller\\EtablissementController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        219 => [[['_route' => 'app_etablissement_delete', '_controller' => 'App\\Controller\\EtablissementController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        246 => [[['_route' => 'app_etudiant_show', '_controller' => 'App\\Controller\\EtudiantController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        259 => [[['_route' => 'app_etudiant_edit', '_controller' => 'App\\Controller\\EtudiantController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        267 => [
             [['_route' => 'app_etudiant_delete', '_controller' => 'App\\Controller\\EtudiantController::delete'], ['id'], ['POST' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
