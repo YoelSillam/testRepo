@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EtablissementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EtablissementRepository::class)]
@@ -18,6 +20,14 @@ class Etablissement
 
     #[ORM\Column(nullable: true)]
     private ?int $nb_etudiant = null;
+
+    #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Etudiant::class)]
+    private Collection $relation;
+
+    public function __construct()
+    {
+        $this->relation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +54,36 @@ class Etablissement
     public function setNbEtudiant(?int $nb_etudiant): static
     {
         $this->nb_etudiant = $nb_etudiant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etudiant>
+     */
+    public function getRelation(): Collection
+    {
+        return $this->relation;
+    }
+
+    public function addRelation(Etudiant $relation): static
+    {
+        if (!$this->relation->contains($relation)) {
+            $this->relation->add($relation);
+            $relation->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelation(Etudiant $relation): static
+    {
+        if ($this->relation->removeElement($relation)) {
+            // set the owning side to null (unless already changed)
+            if ($relation->getEtablissement() === $this) {
+                $relation->setEtablissement(null);
+            }
+        }
 
         return $this;
     }
